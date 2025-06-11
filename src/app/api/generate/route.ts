@@ -1,14 +1,10 @@
-import { NextResponse, NextRequest } from 'next/server';
-import { cookies } from 'next/headers';
-import { DEFAULT_MODEL, sunoApi } from '@/lib/SunoApi';
-import { corsHeaders } from '@/lib/utils';
+import { NextResponse, NextRequest } from "next/server";
+import { cookies } from 'next/headers'
+import { DEFAULT_MODEL, sunoApi } from "@/lib/SunoApi";
+import { corsHeaders } from "@/lib/utils";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
-// The POST handler for this route is commented out to disable the endpoint while
-// keeping the file for reference. If needed in the future, simply uncomment the
-// following block.
-/*
 export async function POST(req: NextRequest) {
   if (req.method === 'POST') {
     try {
@@ -40,16 +36,13 @@ export async function POST(req: NextRequest) {
           }
         });
       }
-      return new NextResponse(
-        JSON.stringify({ error: 'Internal server error: ' + JSON.stringify(error.response.data.detail) }),
-        {
-          status: 500,
-          headers: {
-            'Content-Type': 'application/json',
-            ...corsHeaders
-          }
+      return new NextResponse(JSON.stringify({ error: 'Internal server error: ' + JSON.stringify(error.response.data.detail) }), {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+          ...corsHeaders
         }
-      );
+      });
     }
   } else {
     return new NextResponse('Method Not Allowed', {
@@ -61,14 +54,11 @@ export async function POST(req: NextRequest) {
     });
   }
 }
-*/
 
-// OPTIONS handler is commented out along with POST to fully disable this API.
-/*
+
 export async function OPTIONS(request: Request) {
   return new Response(null, {
     status: 200,
     headers: corsHeaders
   });
 }
-*/
