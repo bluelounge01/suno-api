@@ -1,10 +1,13 @@
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse, NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
-import { DEFAULT_MODEL, sunoApi } from "@/lib/SunoApi";
-import { corsHeaders } from "@/lib/utils";
+import { DEFAULT_MODEL, sunoApi } from '@/lib/SunoApi';
+import { corsHeaders } from '@/lib/utils';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
+// The POST handler is commented out to disable this endpoint while keeping the
+// original code for reference.
+/*
 export async function POST(req: NextRequest) {
   if (req.method === 'POST') {
     try {
@@ -60,11 +63,14 @@ export async function POST(req: NextRequest) {
     });
   }
 }
+*/
 
-
+// OPTIONS handler is commented out with POST to fully disable this API.
+/*
 export async function OPTIONS(request: Request) {
   return new Response(null, {
     status: 200,
     headers: corsHeaders
   });
 }
+*/

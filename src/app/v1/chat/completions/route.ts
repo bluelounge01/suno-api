@@ -1,13 +1,16 @@
-import { NextResponse, NextRequest } from "next/server";
-import { DEFAULT_MODEL, sunoApi } from "@/lib/SunoApi";
-import { corsHeaders } from "@/lib/utils";
+import { NextResponse, NextRequest } from 'next/server';
+import { DEFAULT_MODEL, sunoApi } from '@/lib/SunoApi';
+import { corsHeaders } from '@/lib/utils';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 /**
  * desc
  *
  */
+// The POST handler for this route is commented out to disable the endpoint while
+// keeping the file for future reference.
+/*
 export async function POST(req: NextRequest) {
   try {
 
@@ -52,10 +55,14 @@ export async function POST(req: NextRequest) {
     });
   }
 }
+*/
 
+// OPTIONS handler is commented out along with POST to disable this route.
+/*
 export async function OPTIONS(request: Request) {
   return new Response(null, {
     status: 200,
     headers: corsHeaders
   });
 }
+*/
