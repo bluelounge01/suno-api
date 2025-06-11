@@ -11,7 +11,7 @@
   | <a target="_blank" href="./README_RU.md">русский</a> 
   | <a target="_blank" href="https://suno.gcui.ai">Demo</a> 
   | <a target="_blank" href="https://suno.gcui.ai/docs">Docs</a> 
-  | <a target="_blank" href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fgcui-art%2Fsuno-api&env=SUNO_COOKIE,TWOCAPTCHA_KEY,BROWSER,BROWSER_GHOST_CURSOR,BROWSER_LOCALE,BROWSER_HEADLESS&project-name=suno-api&repository-name=suno-api">Deploy with Vercel</a> 
+  | <a target="_blank" href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fgcui-art%2Fsuno-api&env=SUNO_COOKIE&project-name=suno-api&repository-name=suno-api">Deploy with Vercel</a>
 </p>
 <p align="center">
   <a href="https://www.producthunt.com/products/gcui-art-suno-api-open-source-sunoai-api/reviews?utm_source=badge-product_review&utm_medium=badge&utm_souce=badge-gcui&#0045;art&#0045;suno&#0045;api&#0045;open&#0045;source&#0045;sunoai&#0045;api" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/product_review.svg?product_id=577408&theme=light" alt="gcui&#0045;art&#0047;suno&#0045;api&#0058;Open&#0045;source&#0032;SunoAI&#0032;API - Use&#0032;API&#0032;to&#0032;call&#0032;the&#0032;music&#0032;generation&#0032;AI&#0032;of&#0032;suno&#0046;ai&#0046; | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
@@ -27,8 +27,6 @@ Suno is an amazing AI music service. Although the official API is not yet availa
 
 We discovered that some users have similar needs, so we decided to open-source this project, hoping you'll like it.
 
-This implementation uses the paid [2Captcha](https://2captcha.com/about) service (a.k.a. ruCaptcha) to solve the hCaptcha challenges automatically and does not use any already made closed-source paid Suno API implementations.
-
 ## Demo
 
 We have deployed an example bound to a free Suno account, so it has daily usage limits, but you can see how it runs:
@@ -38,7 +36,6 @@ We have deployed an example bound to a free Suno account, so it has daily usage 
 
 - Perfectly implements the creation API from suno.ai.
 - Automatically keep the account active.
-- Solve CAPTCHAs automatically using [2Captcha](https://2captcha.com) and [Playwright](https://playwright.dev) with [rebrowser-patches](https://github.com/rebrowser/rebrowser-patches).
 - Compatible with the format of OpenAI’s `/v1/chat/completions` API.
 - Supports Custom Mode.
 - One-click deployment to [Vercel](#deploy-to-vercel) & [Docker](#docker).
@@ -59,24 +56,13 @@ We have deployed an example bound to a free Suno account, so it has daily usage 
 
 ![get cookie](https://github.com/gcui-art/suno-api/blob/main/public/get-cookie-demo.gif)
 
-### 2. Register on 2Captcha and top up your balance
-[2Captcha](https://2captcha.com/about) is a paid CAPTCHA solving service that uses real workers to solve the CAPTCHA and has high accuracy. It is needed because of Suno constantly requesting hCaptcha solving that currently isn't possible for free by any means.
-
-[Create](https://2captcha.com/auth/register?userType=customer) a new 2Captcha account, [top up](https://2captcha.com/pay) your balance and [get your API key](https://2captcha.com/enterpage#recognition).
-
-> [!NOTE]
-> If you are located in Russia or Belarus, use the [ruCaptcha](https://rucaptcha.com) interface instead of 2Captcha. It's the same service, but it supports payments from those countries.
-
-> [!TIP]
-> If you want as few CAPTCHAs as possible, it is recommended to use a macOS system. macOS systems usually get fewer CAPTCHAs than Linux and Windows—this is due to its unpopularity in the web scraping industry. Running suno-api on Windows and Linux will work, but in some cases, you could get a pretty large number of CAPTCHAs.
-
-### 3. Clone and deploy this project
+### 2. Clone and deploy this project
 
 You can choose your preferred deployment method:
 
 #### Deploy to Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fgcui-art%2Fsuno-api&env=SUNO_COOKIE,TWOCAPTCHA_KEY,BROWSER,BROWSER_GHOST_CURSOR,BROWSER_LOCALE,BROWSER_HEADLESS&project-name=suno-api&repository-name=suno-api)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fgcui-art%2Fsuno-api&env=SUNO_COOKIE&project-name=suno-api&repository-name=suno-api)
 
 #### Run locally
 
@@ -85,8 +71,10 @@ git clone https://github.com/gcui-art/suno-api.git
 cd suno-api
 npm install
 ```
+
 #### Docker
->[!IMPORTANT]
+
+> [!IMPORTANT]
 > GPU acceleration will be disabled in Docker. If you have a slow CPU, it is recommended to [deploy locally](#run-locally).
 
 Alternatively, you can use [Docker Compose](https://docs.docker.com/compose/). However, follow the step below before running.
@@ -100,20 +88,13 @@ docker compose build && docker compose up
 - If deployed to Vercel, please add the environment variables in the Vercel dashboard.
 
 - If you’re running this locally, be sure to add the following to your `.env` file:
+
 #### Environment variables
+
 - `SUNO_COOKIE` — the `Cookie` header you obtained in the first step.
-- `TWOCAPTCHA_KEY` — your 2Captcha API key from the second step.
-- `BROWSER` — the name of the browser that is going to be used to solve the CAPTCHA. Only `chromium` and `firefox` supported.
-- `BROWSER_GHOST_CURSOR` — use ghost-cursor-playwright to simulate smooth mouse movements. Please note that it doesn't seem to make any difference in the rate of CAPTCHAs, so you can set it to `false`. Retained for future testing.
-- `BROWSER_LOCALE` — the language of the browser. Using either `en` or `ru` is recommended, since those have the most workers on 2Captcha. [List of supported languages](https://2captcha.com/2captcha-api#language)
-- `BROWSER_HEADLESS` — run the browser without the window. You probably want to set this to `true`.
+
 ```bash
 SUNO_COOKIE=<…>
-TWOCAPTCHA_KEY=<…>
-BROWSER=chromium
-BROWSER_GHOST_CURSOR=false
-BROWSER_LOCALE=en
-BROWSER_HEADLESS=true
 ```
 
 ### 5. Run suno-api
@@ -242,15 +223,15 @@ if __name__ == '__main__':
 ### JavaScript
 
 ```js
-const axios = require("axios");
+const axios = require('axios');
 
 // replace your vercel domain
-const baseUrl = "http://localhost:3000";
+const baseUrl = 'http://localhost:3000';
 
 async function customGenerateAudio(payload) {
   const url = `${baseUrl}/api/custom_generate`;
   const response = await axios.post(url, payload, {
-    headers: { "Content-Type": "application/json" },
+    headers: { 'Content-Type': 'application/json' }
   });
   return response.data;
 }
@@ -258,7 +239,7 @@ async function customGenerateAudio(payload) {
 async function generateAudioByPrompt(payload) {
   const url = `${baseUrl}/api/generate`;
   const response = await axios.post(url, payload, {
-    headers: { "Content-Type": "application/json" },
+    headers: { 'Content-Type': 'application/json' }
   });
   return response.data;
 }
@@ -266,7 +247,7 @@ async function generateAudioByPrompt(payload) {
 async function extendAudio(payload) {
   const url = `${baseUrl}/api/extend_audio`;
   const response = await axios.post(url, payload, {
-    headers: { "Content-Type": "application/json" },
+    headers: { 'Content-Type': 'application/json' }
   });
   return response.data;
 }
@@ -292,9 +273,9 @@ async function getClipInformation(clipId) {
 async function main() {
   const data = await generateAudioByPrompt({
     prompt:
-      "A popular heavy metal song about war, sung by a deep-voiced male singer, slowly and melodiously. The lyrics depict the sorrow of people after the war.",
+      'A popular heavy metal song about war, sung by a deep-voiced male singer, slowly and melodiously. The lyrics depict the sorrow of people after the war.',
     make_instrumental: false,
-    wait_audio: false,
+    wait_audio: false
   });
 
   const ids = `${data[0].id},${data[1].id}`;
@@ -302,7 +283,7 @@ async function main() {
 
   for (let i = 0; i < 60; i++) {
     const data = await getAudioInformation(ids);
-    if (data[0].status === "streaming") {
+    if (data[0].status === 'streaming') {
       console.log(`${data[0].id} ==> ${data[0].audio_url}`);
       console.log(`${data[1].id} ==> ${data[1].audio_url}`);
       break;
